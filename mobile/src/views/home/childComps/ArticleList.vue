@@ -1,8 +1,8 @@
 <template>
   <div class="article-list" v-if="articleList.length !== 0">
-    <div class="list-item" v-for="(item,index) in articleList" :key="index">
+    <div class="list-item" v-for="(item,index) in articleList" :key="index" @click="itemClick(item.id)">
       <div class="image">
-        <van-image fit="cover" :src="item.photo" radius="8" height="200"/>
+        <van-image fit="cover" :src="item.photo" radius="8" height="200" lazy-load/>
       </div>
       <div class="info">
         <h2>{{item.title}}</h2>
@@ -36,6 +36,11 @@
         default(){
           return []
         }
+      }
+    },
+    methods:{
+      itemClick(id){
+        this.$router.push('/detail/' + id)
       }
     }
   }
