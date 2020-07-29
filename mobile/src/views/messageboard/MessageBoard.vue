@@ -1,6 +1,6 @@
 <template>
-  <div>
-    留言板
+  <div class="message-boadr">
+
   </div>
 </template>
 

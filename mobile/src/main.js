@@ -23,7 +23,7 @@ Vue.directive('highlight',function (el) {
 
 
 
-import { Popup , Swipe, SwipeItem ,Image as VanImage ,Tag ,Divider ,Lazyload ,Field ,Button} from 'vant'
+import { Popup , Swipe, SwipeItem ,Image as VanImage ,Tag ,Divider ,Lazyload ,Field ,Button,Pagination} from 'vant'
 
 Vue.use(Popup)
 Vue.use(Swipe)
@@ -34,7 +34,13 @@ Vue.use(Divider)
 Vue.use(Lazyload)
 Vue.use(Field)
 Vue.use(Button)
+Vue.use(Pagination)
 
+
+import { Card ,Timeline,TimelineItem} from "element-ui";
+Vue.use(Card)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 
 
 

@@ -2,6 +2,13 @@
   <div class="home">
     <swiper :recArticle="recArticle" />
     <article-list :articleList="articleList"/>
+    <van-pagination
+            v-model="currentPage"
+            :total-items="totalpages"
+            :show-page-size="3"
+            force-ellipses
+            @change="change"
+    />
   </div>
 </template>
 
@@ -45,8 +52,14 @@
           for (let i of this.articleList) {
             i.tags = i.tags.split(',')
           }
+          console.log(res.data)
         })
       },
+
+      change(value){
+        this.currentPage = value
+        this.getByPage()
+      }
     }
   }
 </script>

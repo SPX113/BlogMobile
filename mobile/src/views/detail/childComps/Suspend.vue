@@ -1,9 +1,14 @@
 <template>
   <div class="suspend">
-    <div class="menu">
+    <div class="menu" @click="menuPopup">
       <i class="iconfont icon-jichutubiao-XC-mulu"></i>
       <p>目录</p>
     </div>
+    <van-popup v-model="menuShow" position="left" round :style="{ maxWidth: '70%' }" class="titleShow">
+      <p v-for="(item,index) in menu" :key="index"   @click="jump(item.id)" >
+        {{item.body}}
+      </p>
+    </van-popup>
     <div class="stars" :class="{ active : islike }" @click.once="starClick">
       <i class="iconfont icon-xingxing"></i>
       <p>{{stars}}</p>
@@ -12,7 +17,7 @@
       <i class="iconfont icon-pinglun"></i>
       <p>{{comments}}</p>
     </div>
-    <van-popup v-model="show" position="bottom" round class="comments" >
+    <van-popup v-model="show" position="bottom" round class="comments"  >
       <div class="container">
         <p class="title">{{comments}} 条评论</p>
         <div class="comment-item" v-for="(item,index) in commentsList" :key="index">
@@ -34,7 +39,7 @@
         <div class="uploadComment">
           <div>
             <van-field v-model="name" label="昵称" placeholder="请输入昵称" />
-            <van-button type="default" >
+            <van-button type="default" @click="upload">
               <i class="iconfont icon-bi"> 评论</i>
             </van-button>
           </div>
@@ -55,11 +60,17 @@
 </template>
 
 <script>
+  import {Notify} from "vant";
+
   export default {
     name: "Suspend",
+    components:{
+      [Notify.Component.name]: Notify.Component
+    },
     data(){
       return{
         show : false,
+        menuShow : false,
         message : '',
         name : ''
       }
@@ -92,6 +103,12 @@
         default(){
           return []
         }
+      },
+      menu:{
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
     methods:{
@@ -100,7 +117,30 @@
       },
       showPopup() {
         this.show = true;
+      },
+      menuPopup(){
+        this.menuShow = true
+      },
+      upload(){
+        if(this.name === '' || this.message === '')
+        {
+          Notify({ type: 'danger', message: '输入框不能为空' })
+        }
+        else{
+          this.$emit('upload',this.name,this.message)
+          this.name =''
+          this.message = ''
+        }
+      },
+
+
+
+      jump(idname){
+        document.querySelector('#'+idname).scrollIntoView(true);
+        this.menuShow = false
       }
+
+
     }
   }
 </script>
@@ -132,7 +172,7 @@
     color: red;
   }
   .comments{
-    max-height: 80vh;
+    max-height: 90vh;
   }
   .container{
     padding-bottom: 110px;
@@ -193,5 +233,11 @@
   }
   .uploadComment div .van-button i{
     font-size: 15px;
+  }
+  .titleShow p{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
 </style>

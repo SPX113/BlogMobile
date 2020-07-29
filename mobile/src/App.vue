@@ -25,5 +25,8 @@ export default {
   #app{
     background-color: rgb(237,236,236);
   }
+  html{
+    background-color: rgb(237,236,236);
+  }
 
 </style>

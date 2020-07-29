@@ -3,7 +3,8 @@
     <top :articleInfo = "articleInfo" />
     <div class="container">
       <article-html :mdhtml="mdhtml"/>
-    <suspend :stars="stars" :comments="comments" :islike="islike" :commentsList="commentsList" @starClick="starClick"/>
+    <suspend :stars="stars" :comments="comments" :islike="islike" :commentsList="commentsList" :menu="menu"
+             @starClick="starClick" @upload="upLoadComment" />
     </div>
   </div>
 </template>
@@ -12,6 +13,8 @@
   import { getDetail , getArticle , upLoadCommnet , giveStar , getComments} from 'network/detail'
   import marked from 'marked'
 
+  import {Notify} from "vant"
+
   import Top from "./childComps/Top";
   import ArticleHtml from "./childComps/ArticleHtml";
   import Suspend from "./childComps/Suspend";
@@ -19,7 +22,7 @@
   export default {
     name: "Detail",
     components:{
-      Top,ArticleHtml,Suspend
+      Top,ArticleHtml,Suspend,[Notify.Component.name]: Notify.Component
     },
     data(){
       return{
@@ -29,7 +32,15 @@
         stars : 0,
         comments : 0,
         islike : false,
-        commentsList : []
+        commentsList : [],
+        menu : []
+      }
+    },
+    watch:{
+      mdhtml:{
+        handler(){
+          this.getMenu()
+        }
       }
     },
     created() {
@@ -67,7 +78,29 @@
           this.islike = true
           this.stars ++
         })
+      },
+
+      upLoadComment(name,message){
+        upLoadCommnet(this.id,name,message).then(res => {
+          Notify({ type: 'success', message: '评论成功' });
+          this.getComments()
+        })
+      },
+
+      getMenu(){
+        this.$nextTick(() => {
+          document.querySelector(".markdown-body").querySelectorAll("h1,h2,h3,h4,h5,h6").forEach(item =>{
+            let obj = {
+              id : item.id,
+              level : parseInt(item.tagName.substr(1, 1)),
+              body : item.innerHTML
+            }
+            this.menu.push(obj)
+          })
+        })
       }
+
+
     }
   }
 </script>
