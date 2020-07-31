@@ -37,10 +37,11 @@ Vue.use(Button)
 Vue.use(Pagination)
 
 
-import { Card ,Timeline,TimelineItem} from "element-ui";
+import { Card ,Timeline,TimelineItem,Popover} from "element-ui";
 Vue.use(Card)
 Vue.use(Timeline)
 Vue.use(TimelineItem)
+Vue.use(Popover)
 
 
 

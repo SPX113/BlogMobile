@@ -10,10 +10,22 @@
         <ul>
           <li><a href="https://github.com/SPX113"><i class="iconfont icon-github"></i></a></li>
           <li>
-            <i class="iconfont icon-weixin"></i>
+            <el-popover
+                    placement="bottom"
+                    title="SPX_11-13"
+                    width="100"
+                    trigger="click">
+              <span slot="reference"> <i class="iconfont icon-weixin"></i></span>
+            </el-popover>
           </li>
           <li>
-              <i class="iconfont icon-youxiang"></i>
+            <el-popover
+                    placement="bottom"
+                    title="1137893057@qq.com"
+                    width="180"
+                    trigger="click">
+              <span slot="reference"> <i class="iconfont icon-youxiang"></i></span>
+            </el-popover>
           </li>
         </ul>
       </div>
